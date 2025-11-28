@@ -61,9 +61,9 @@
 @layer base {
   * {
     @apply border-border;
-    @apply font-[Inter];
+    @apply font-sans;
   }
   body {
-    @apply bg-gray-500 text-foreground;
+    @apply bg-[#FFF8DE] text-foreground;
   }
 }
