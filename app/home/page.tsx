@@ -2,19 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import Default from "./_components/default";
 import Level from "./_components/level";
-
+import { redirect } from "next/navigation";
+import { decodeData } from "@/lib/utils/urlHelpers";
+import { use } from "react";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { name?: string, veiw: string}
+  searchParams: { q?: string, view: string}
 }) {
-    const { name, veiw } = await searchParams
-    // console.log(name,veiw)
+    const { q, view } = await searchParams;
+    const userData = await decodeData(q ?? "") || {};
+
+    if (view !== "default" && view !== "level") {
+        redirect("/");
+    }
+
+    // console.log(name, view)
     return (
         <main className="bg-[#FFF8DE]">
-            {veiw === "default" && <Default name={name ?? ""}></Default>}
-            {veiw === "level" && <Level name={name ?? ""}></Level>}
+            {view === "default" && <Default q={q ?? ""}></Default>}
+            {view === "level" && <Level q={q ?? ""}></Level>}
         </main>
     );
 }

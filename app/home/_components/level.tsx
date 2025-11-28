@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import LevelCard from "./level-card";
+import { decodeData } from "@/lib/utils/urlHelpers";
 
 interface LevelProps {
-    name: string;
+    q: string;
 }
 
 const levels = [
@@ -13,12 +14,13 @@ const levels = [
     { text:"Expert", level: "C2", color:"727272" },
 ]
 
-export default function Level({ name }: LevelProps) {
-    console.log(name)
+export default function Level({ q }: LevelProps) {
+    const userData = decodeData(q ?? "") || {};
+
     return (
         <section className=" text-black h-screen flex flex-col">
             <nav className='fixed top-0 p-8 rotate-180'>
-                <Link href={`/home?name=${name}&veiw=default`} className='w-full h-full'>
+                <Link href={`/home?q=${q}&view=default`} className='w-full h-full'>
                     <Image  
                     src={"/icons/right-arrow.png"}
                     alt="Arrow Icon"
@@ -45,7 +47,7 @@ export default function Level({ name }: LevelProps) {
                 <div className="py-10 flex flex-col ">
                     {
                         levels.map((item, index) => (
-                            <LevelCard text={item.text} level={item.level} color={item.color} key={index} />
+                            <LevelCard text={item.text} level={item.level} color={item.color} key={index} q={q ?? ""} />
                         ))
                     }
                 </div>
