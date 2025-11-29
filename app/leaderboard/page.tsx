@@ -6,7 +6,7 @@ export default async function Leaderboard({ searchParams } : { searchParams: { q
     const { q } = await searchParams;
     const userData = decodeData(q ?? "") || {};
     const backUrl = `/home?q=${q}&view=default`;
-
+    console.log(userData)
     return (
         <main className="bg-white">
             <section className='flex flex-col p-8 h-screen justify-center'>

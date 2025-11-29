@@ -81,7 +81,8 @@ export default function Synonym({ q, level, initialQuestions } : SynonymProps) {
     const goLeaderboard = () => {
         const newUserData = encodeData({
             name: userData.name,
-            score: score
+            score: score,
+            level: level
         })
         setTimer(0);
         setIsActive(false);
