@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 export default function Welcome() {
     return  (
         <section className="bg-white h-[65%] p-8 w-full text-black text-center self-end flex flex-col justify-around rounded-t-[3rem] drop-shadow-[0px_10px_40px_rgba(0,0,0,0.25)]">
