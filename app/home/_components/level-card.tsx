@@ -7,12 +7,11 @@ interface CardProps {
 export default function LevelCard({ text, level, color, q }: CardProps) {
 
     return (
-        <div style={{ backgroundColor: `#${color}` }} className="text-center py-2 my-3 rounded-full">
+        <Link  style={{ backgroundColor: `#${color}` }} href={`/game?q=${q}&level=${level}`} className="text-center py-2 my-3 rounded-full">
             <p>
-                <Link href={`/game?q=${q}&level=${level}`}>
-                    <span className="font-bold">{text}</span>({level})
-                </Link> 
+                <span className="font-bold">{text}</span>
+                ({level})
             </p>
-        </div>
+        </Link>
     );
 }
