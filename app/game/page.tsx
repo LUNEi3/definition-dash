@@ -1,15 +1,18 @@
-import { decodeData } from "@/lib/utils/urlHelpers";
+
 import Synonym from "./_components/game-synonym ";
-import { redirect } from "next/navigation";
+import { generateGameBatch } from "@/lib/utils/gameHelpers";
 
 export default async function GamePage({ searchParams } : { searchParams: { q?: string, level?: string }} ) {
-    const { q, level } = await searchParams;
-
-    const backUrl = `/home?q=${q}&view=default`;
-    
+    const { q, level } = await searchParams;   
+    const questions = generateGameBatch(20, level || "Mixed");
+            
     return (
         <main className="bg-[#FFF8DE]">
-            <Synonym backUrl={backUrl} level={level ?? ""} />
+            <Synonym 
+                q={q ?? ""}
+                level={level ?? ""}
+                initialQuestions={questions}
+            />
         </main>
     );
 }

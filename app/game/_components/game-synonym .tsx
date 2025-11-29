@@ -1,59 +1,90 @@
 'use client'
 
-import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { redirect } from "next/navigation";
-import SynonymCard from "./sysnonym-card";
-
+import { GameQuestion } from "@/lib/utils/gameHelpers";
+import { decodeData, encodeData } from "@/lib/utils/urlHelpers";
 
 interface SynonymProps {
+    q: string,
     level: string,
-    backUrl: string
+    initialQuestions: GameQuestion[]
 }
 
-export default function Synonym({ level, backUrl } : SynonymProps) {
+export default function Synonym({ q, level, initialQuestions } : SynonymProps) {
 
-
-    const cards = [
-        { word: "Hello World" },
-        { word: "It's so COLD!!" },
-        { word: "Need a hot coffee" },
-        { word: "Need a hot coffee" },
-        { word: "Need a hot coffee" },
-    ]
-    const [timeLeft, setTimeLeft] = useState(60);
+    const backUrl = `/home?q=${q}&view=default`;
+    const userData = decodeData(q ?? "") || {};
+    const [timer, setTimer] = useState(60);
     const [isActive, setIsActive] = useState(true);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [score, setScore] = useState(0);
+    const [timerColor, setTimerColor] = useState("text-black");
+    const [choiceBG, setChoiceBG] = useState("bg-white");
+
+    const currentQuestion = initialQuestions[currentIndex];
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
 
-        if (isActive && timeLeft > 0) {
+        if (isActive && timer > 0) {
             // Create the interval
             interval = setInterval(() => {
-                setTimeLeft((prevTime) => prevTime - 1);
+                setTimer((prevTime) => prevTime - 1);
             }, 1000);
-        } else if (timeLeft === 0) {
+        } else if (timer === 0) {
             // Timer finished logic
-            setIsActive(false);
-            // Optional: Trigger an action here (e.g., submit quiz)
-            redirect(backUrl)
+            goLeaderboard();
         }
 
-        return () => {
-            if (interval) clearInterval(interval);
-        };
+        return () => { if (interval) clearInterval(interval); };
 
-    }, [isActive, timeLeft])
+    }, [isActive, timer])
 
-    const addTime = () => {
-        setTimeLeft((prevTime) => prevTime + 2);
-        // console.log(timeLeft)
+    const handleAnswerClick = (choice: string) => {
+        if (!isActive) return;
+
+        if (choice === currentQuestion.correctAnswer) {
+            setScore(prev => prev + 1);
+            setTimer(prev => prev + 2);
+            setTimerColor("text-green-600");
+            setChoiceBG("bg-[#C0FFBA]");
+            setTimeout(() => {
+                setTimerColor("text-black");
+                setChoiceBG("bg-white");
+            }, 500);
+        } else {
+            setTimer(prev => Math.max(0, prev - 3));
+            setTimerColor("text-red-600");
+            setChoiceBG("bg-[#FFBABB]")
+            setTimeout(() => {
+                setTimerColor("text-black");
+                setChoiceBG("bg-white");
+            }, 500);
+        }
+
+        if (currentIndex < initialQuestions.length - 1) {
+            setCurrentIndex(prev => prev + 1);
+        } else {
+            // No more questions! End game early?
+            // Or just loop/shuffle again (simple: end game)
+            goLeaderboard();
+        }
     }
 
     const handleClickBack = () => {
-        setTimeLeft(0);
+        setTimer(0);
         redirect(backUrl);
+    }
+
+    const goLeaderboard = () => {
+        const newUserData = encodeData({
+            name: userData.name,
+            score: score
+        })
+        setIsActive(false);
+        redirect(`/leaderboard?q=${newUserData}`); 
     }
 
     return (
@@ -69,23 +100,26 @@ export default function Synonym({ level, backUrl } : SynonymProps) {
                 </button>
             </nav>
             <section className="bg-white h-[90%] p-8 w-full self-end flex flex-col justify-start rounded-t-[3rem] drop-shadow-[0px_10px_40px_rgba(0,0,0,0.25)]">
-                <div className="text-right opacity-60 font-bold text-xl">{timeLeft}s</div>
+                <div className={`text-right opacity-60 font-bold text-xl ${timerColor}`}>{timer}s</div>
                 <div className="pb-5">
                     <h1 className="font-black text-xl py-2">
                         Synonym <span className="opacity-60 font-normal">({level})</span>
                     </h1>
-                    <h2 className="text-black text-left text-base font-bold">
-                        What is the synonym of "" ?
+                    <h2 className="text-black text-left text-base font-bold ">
+                        What is the synonym of "{currentQuestion.word}" ?
                     </h2>
                 </div>
                 <div className="py-5 flex flex-col ">
-                    {
-                        cards.map((item, index) => (
-                            <button onClick={addTime} key={index}>
-                                <SynonymCard />
-                            </button>
-                        ))
-                    }
+                    {currentQuestion.choices.map((choice, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handleAnswerClick(choice)}
+                            className={`text-center py-3 border border-gray-400 rounded-full my-4 
+                            ${choiceBG} hover:cursor-pointer transition-colors`}
+                        >
+                            {choice}
+                        </button>
+                    ))}
                 </div>
                 <p className="p-3 text-center text-xs font-extralight opacity-60">
                     Tips: correct +2 second, incorrect -3 second.
