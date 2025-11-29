@@ -16,8 +16,9 @@ export default function Default({ q }: StartProps) {
             <p className="py-3 text-sm font-light opacity-60">
                 This is my Final Project of Software Engineering class (CS436). Hope this shit is working and Thank you for visiting!
             </p>
-            <div className="w-full h-2/5 relative left-[-1rem]">
+            <div className="w-full aspect-square h-2/5 relative left-[-1rem] m-auto ">
                 <Image 
+                className="object-contain "
                 src={"/icons/thinking.png"}
                 alt="Women thinking image"
                 fill
