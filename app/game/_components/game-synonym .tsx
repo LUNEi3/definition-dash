@@ -83,6 +83,7 @@ export default function Synonym({ q, level, initialQuestions } : SynonymProps) {
             name: userData.name,
             score: score
         })
+        setTimer(0);
         setIsActive(false);
         redirect(`/leaderboard?q=${newUserData}`); 
     }
