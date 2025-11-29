@@ -34,7 +34,7 @@ export default function Level({ q }: LevelProps) {
                     Choose the Level!
                 </h1>
                 <p className="text-black pb-5 pt-3 text-center text-sm font-light opacity-60">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus perferendis amet laudantium veritatis earum fugiat nulla id atque quod.
+                    Tackle harder levels to earn higher scores — the more difficult the level, the greater the reward.
                 </p>
             </section>
             <section className="bg-white h-[65%] p-8 w-full self-end flex flex-col justify-center rounded-t-[3rem] drop-shadow-[0px_10px_40px_rgba(0,0,0,0.25)]">
