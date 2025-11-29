@@ -55,6 +55,7 @@ export default function Synonym({ q, level, initialQuestions } : SynonymProps) {
                 setChoiceBG("bg-white");
             }, 500);
         } else {
+            setScore(prev => Math.max(0, prev - 1));
             setTimer(prev => Math.max(0, prev - 3));
             setTimerColor("text-red-600");
             setChoiceBG("bg-[#FFBABB]")
