@@ -1,79 +1,81 @@
 # Definition Dash
 
-Definition Dash is a web application developed as the final project for the Software Engineering class (CS436). This project serves as a foundation for a comprehensive platform that I plan to further develop as a side project. The application is built using modern web technologies and follows best practices for full-stack development.
+**Definition Dash** is a mobile-first web application designed to help users manage and review definitions or flashcard-style data. 
 
-## Features
-- **Authentication System**: Includes sign-up, login, and password management.
-- **Dynamic Pages**: Supports dynamic rendering of components based on user input.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
-- **Customizable Themes**: Light and dark mode support.
-- **Level-Based Content**: Interactive levels for user engagement.
+> **Current Status:** MVP (Minimum Viable Product) / Prototype  
+> **Note:** This project is currently in active development for a class deadline. The current version is optimized strictly for **mobile views** and utilizes **URL parameters** for state management instead of a persistent database.
 
-## Technologies Used
-- **Frontend**: React, Next.js, Tailwind CSS
-- **Backend**: Supabase (for authentication and database management)
-- **Other Tools**: TypeScript, ESLint, PostCSS
+## Features (MVP)
 
-## Folder Structure
-```
-app/
-  auth/          # Authentication-related pages
-  home/          # Home page and components
-  protected/     # Protected routes
-  sign-in/       # Sign-in components
-components/      # Reusable UI components
-lib/             # Utility functions and Supabase client
-public/          # Static assets (e.g., icons, images)
-```
+* **Mobile-First Design:** The UI is specifically tailored for mobile screens to ensure a native-like experience on handheld devices.
+* **Zero-Database Architecture (Current):** To meet immediate deadlines, all data passing between pages is handled via URL query parameters, ensuring fast navigation without backend latency.
+* **Light Mode:** Clean and simple light-themed interface.
+* **Next.js 14+:** Built using the latest Next.js App Router for server-side rendering and routing.
+
+## Tech Stack
+
+* **Framework:** [Next.js](https://nextjs.org/) (App Router)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **Deployment:** [Vercel](https://vercel.com/) (Recommended)
+
+## Known Limitations (MVP)
+
+* **Mobile Only:** The application does not currently support desktop layouts. Please view on a mobile device or use your browser's "Mobile View" developer tool.
+* **Data Persistence:** Refreshing the browser while not on a URL with query parameters may result in lost data.
+* **No Authentication:** Sign-in and Sign-up features are UI-only or disabled.
+
+## Roadmap & Future Plans
+
+The following features are planned for post-deadline development to turn this MVP into a full-stack application:
+
+- [ ] **Backend Integration:** Implement [Supabase](https://supabase.com/) for a real PostgreSQL database.
+- [ ] **Authentication:** Add secure Sign-in/Sign-up flows (likely via Supabase Auth).
+- [ ] **Responsive Design:** Expand UI to support Desktop and Tablet screens.
+- [ ] **Theming:** Implement Dark Mode toggle.
+- [ ] **State Management:** Move away from URL-based state to server-state (React Query) or global state.
 
 ## Getting Started
+
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+
+* Node.js (v18 or higher)
+* npm, yarn, or pnpm
 
 ### Installation
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd definition-dash
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
 
-### Running the Application
-1. Start the development server:
-   ```bash
-   npm run dev
-   ```
-2. Open your browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
+1.  Clone the repository:
+    ```bash
+    git clone [https://github.com/LUNEi3/definition-dash.git](https://github.com/LUNEi3/definition-dash.git)
+    cd definition-dash
+    ```
 
-### Environment Variables
-Create a `.env.local` file in the root directory and configure the following variables:
+2.  Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+
+4.  Open [http://localhost:3000](http://localhost:3000) with your browser.
+    * *Tip: Press `F12` and toggle the Device Toolbar (Ctrl+Shift+M) to view the app in Mobile mode.*
+
+## Project Structure
 ```
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+app/
+  ├── game/          # Main quiz gameplay interface
+  ├── home/          # Landing page and menu components
+  ├── leaderboard/   # Score summary (Placeholder for future Leaderboard)
+  └── sign-in/       # Authentication and login UI
+components/          # Reusable UI elements (buttons, cards, layout)
+lib/                 # Utility functions and shared helpers
+public/              # Static assets (images, icons, fonts)
 ```
-
-## Future Plans
-- Add more interactive features and gamification elements.
-- Implement advanced user analytics.
-- Integrate additional third-party APIs.
-- Enhance accessibility and performance.
-
 ## Contributing
-Contributions are welcome! If you'd like to contribute, please fork the repository and submit a pull request.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Acknowledgments
-- Thanks to the CS436 instructors for their guidance.
-- Special thanks to the open-source community for providing amazing tools and libraries.
+This project is currently a closed assignment for **CS436**, but open-source contributions may be accepted in the future after the grading period.
