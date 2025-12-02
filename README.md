@@ -5,6 +5,12 @@
 > **Current Status:** MVP (Minimum Viable Product) / Prototype  
 > **Note:** This project is currently in active development for a class deadline. The current version is optimized strictly for **mobile views** and utilizes **URL parameters** for state management instead of a persistent database.
 
+## Live Demo
+
+You can try the live version of the application here:
+ **[https://definition-dash-liart.vercel.app/](https://definition-dash-liart.vercel.app/)**
+
+*(**Note:** As this is a mobile-first design, please view this link on a mobile device or use your browser's "Mobile View" / DevTools for the intended experience.)*
 ## Features (MVP)
 
 * **Mobile-First Design:** The UI is specifically tailored for mobile screens to ensure a native-like experience on handheld devices.
